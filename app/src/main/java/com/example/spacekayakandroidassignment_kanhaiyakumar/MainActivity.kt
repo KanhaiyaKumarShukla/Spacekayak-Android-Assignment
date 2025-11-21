@@ -1,6 +1,7 @@
 package com.example.spacekayakandroidassignment_kanhaiyakumar
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -19,15 +20,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spacekayakandroidassignment_kanhaiyakumar.datastore.isOnboardingDone
 import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.OTPNavGraph
 import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.OnboardingNavGraph
 import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.Screen
@@ -61,11 +66,21 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainApp() {
+    val context = LocalContext.current
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
+    val onboardingDoneFlow = remember { isOnboardingDone(context) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val bottomSheetViewModel: BottomSheetViewModel = viewModel()
+    val onboardingDone = isOnboardingDone(context).collectAsState(null)
 
+    if (onboardingDone.value == null) {
+        // Optional loader UI
+        return
+    }
+    LaunchedEffect(onboardingDone.value) {
+        Log.d("onboarding", onboardingDone.value.toString())
+    }
     // Handle back press
     BackHandler(enabled = bottomSheetState.isVisible) {
         coroutineScope.launch {
@@ -85,7 +100,7 @@ fun MainApp() {
     // Main content with NavHost
     NavHost(
         navController = navController,
-        startDestination = Screen.Welcome1.route
+        startDestination = if (onboardingDone.value == true) Screen.OTPOnboarding.route else Screen.WelcomePager.route
     ) {
 
         // Show OnboardingNavGraph
