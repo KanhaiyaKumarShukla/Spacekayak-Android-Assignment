@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.accompanist.pager.indicators)
 
     implementation(libs.libphonenumber)
+    implementation(libs.accompanist.systemuicontroller)
 
 
 }

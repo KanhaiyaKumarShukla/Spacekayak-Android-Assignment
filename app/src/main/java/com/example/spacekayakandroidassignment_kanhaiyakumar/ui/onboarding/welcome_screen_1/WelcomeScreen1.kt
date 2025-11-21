@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.example.spacekayakandroidassignment_kanhaiyakumar.R
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.components.BottomPrimaryButton
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.components.PageIndicator
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun WelcomeScreen1(
@@ -48,6 +50,15 @@ fun WelcomeScreen1(
         colorResource(id = R.color.gradient_dark_blue),
         colorResource(id = R.color.gradient_navy)
     )
+    val systemUiController = rememberSystemUiController()
+    val navColor = colorResource(id = R.color.gradient_navy)
+
+    LaunchedEffect(Unit) {
+        systemUiController.setNavigationBarColor(
+            color = navColor,
+            darkIcons = false  // use white icons on dark background
+        )
+    }
 
     Box(
         modifier = Modifier

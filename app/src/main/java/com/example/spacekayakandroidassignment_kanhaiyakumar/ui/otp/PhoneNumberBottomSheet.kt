@@ -72,7 +72,7 @@ fun PhoneNumberBottomSheet(
             .fillMaxWidth()
             .onGloballyPositioned { size = it.size }
             .sheetBackground(size)      // <-- custom gradient modifier
-            .padding( 24.dp)
+            .padding( start = 24.dp, bottom = 24.dp, end = 24.dp, top=5.dp)
     ) {
 
         Column(
@@ -82,10 +82,11 @@ fun PhoneNumberBottomSheet(
 
             // Title
             Text(
-                text = "Verify your \nphone number",
+                text = "Verify your \nPhone Number",
                 color = Color.White,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
+                lineHeight = 32.sp,
                 textAlign = TextAlign.Start
             )
 

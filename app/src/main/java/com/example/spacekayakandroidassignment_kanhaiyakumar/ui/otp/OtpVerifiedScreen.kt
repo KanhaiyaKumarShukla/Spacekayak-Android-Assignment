@@ -40,7 +40,7 @@ fun OtpVerifiedScreen(){
             .fillMaxWidth()
             .onGloballyPositioned { size = it.size }
             .sheetBackground(size)      // <-- custom gradient modifier
-            .padding( 24.dp)
+            .padding( start = 24.dp, bottom = 24.dp, end = 24.dp, top=5.dp)
     ) {
         Column(
             modifier = Modifier

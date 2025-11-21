@@ -21,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -28,6 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.OTPNavGraph
 import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.OnboardingNavGraph
+import com.example.spacekayakandroidassignment_kanhaiyakumar.navigation.Screen
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.onboarding.otp_onboarding.OTPOnboardingScreen
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.theme.SpacekayakAndroidAssignmentKanhaiyaKumarTheme
 import com.example.spacekayakandroidassignment_kanhaiyakumar.viewmodel.BottomSheetViewModel
@@ -39,10 +42,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
-
             SpacekayakAndroidAssignmentKanhaiyaKumarTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .systemBarsPadding(),
                     color = MaterialTheme.colorScheme.background
                 ) {
@@ -60,7 +63,7 @@ class MainActivity : ComponentActivity() {
 fun MainApp() {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val bottomSheetViewModel: BottomSheetViewModel = viewModel()
 
     // Handle back press
@@ -82,29 +85,30 @@ fun MainApp() {
     // Main content with NavHost
     NavHost(
         navController = navController,
-        startDestination = "onboarding"
+        startDestination = Screen.Welcome1.route
     ) {
-        composable("onboarding") {
-            // Show OnboardingNavGraph
-            OnboardingNavGraph(
-                navController = navController,
-                bottomSheetViewModel = bottomSheetViewModel,
-                onShowBottomSheet = {
-                    coroutineScope.launch {
-                        bottomSheetState.show()
-                        bottomSheetViewModel.showBottomSheet()
-                    }
+
+        // Show OnboardingNavGraph
+        OnboardingNavGraph(
+            navController = navController,
+            bottomSheetViewModel = bottomSheetViewModel,
+            onShowBottomSheet = {
+                coroutineScope.launch {
+                    bottomSheetState.show()
+                    bottomSheetViewModel.showBottomSheet()
                 }
-            )
-        }
+            }
+        )
+
         // Add other destinations as needed
     }
 
-    // Bottom Sheet
+   // Bottom Sheet
     if (bottomSheetViewModel.isBottomSheetVisible) {
         ModalBottomSheet(
             onDismissRequest = onCloseBottomSheet,
-            sheetState = bottomSheetState
+            sheetState = bottomSheetState,
+            containerColor = Color(0xFF01183A)
         ) {
             // OTP Flow in Bottom Sheet
             OTPNavGraph(
@@ -123,5 +127,7 @@ fun MainApp() {
             )
         }
     }
+
+
 }
 

@@ -55,7 +55,7 @@ fun OtpVerificationBottomSheet(
             .fillMaxSize()
             .onGloballyPositioned { size = it.size }
             .sheetBackground(size)
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding( start = 24.dp, bottom = 24.dp, end = 24.dp, top=5.dp)
     ) {
 
         Column(

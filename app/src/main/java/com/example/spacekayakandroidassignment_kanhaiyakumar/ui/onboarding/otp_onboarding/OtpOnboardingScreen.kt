@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.example.spacekayakandroidassignment_kanhaiyakumar.R
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.components.BottomPrimaryButton
 import com.example.spacekayakandroidassignment_kanhaiyakumar.viewmodel.BottomSheetViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun OTPOnboardingScreen(
@@ -53,6 +55,24 @@ fun OTPOnboardingScreen(
         startY = 0f,
         endY = Float.POSITIVE_INFINITY
     )
+
+    val systemUiController = rememberSystemUiController()
+    val barColor = Color(0xFF62D6FF)
+
+    LaunchedEffect(Unit) {
+        // Status bar (top)
+        systemUiController.setStatusBarColor(
+            color = barColor,
+            darkIcons = false   // false = white icons
+        )
+
+        // Navigation bar (bottom)
+        systemUiController.setNavigationBarColor(
+            color = Color.White,
+            darkIcons = false
+        )
+    }
+
 
     Box(
         modifier = Modifier
