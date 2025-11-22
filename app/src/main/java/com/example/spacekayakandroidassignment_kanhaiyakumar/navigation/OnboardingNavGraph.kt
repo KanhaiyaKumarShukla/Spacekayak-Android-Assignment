@@ -7,9 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.onboarding.otp_onboarding.OTPOnboardingScreen
-import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.onboarding.welcome_screen_1.WelcomeScreen1
-import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.onboarding.welcome_screen_2.WelcomeScreen2
-import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.onboarding.welcome_screen_3.WelcomeScreen3
 import android.content.Intent
 import android.util.Log
 import androidx.activity.compose.BackHandler
@@ -38,42 +35,7 @@ fun NavGraphBuilder.OnboardingNavGraph(
     bottomSheetViewModel: BottomSheetViewModel,
     onShowBottomSheet: () -> Unit
 ) {
-    composable(Screen.Welcome1.route) {
-        WelcomeScreen1(
-            onNextClick = { navController.navigate(Screen.Welcome2.route) },
-            currentPage = 0,
-            totalPages = 3
-        )
-    }
 
-    composable(Screen.Welcome2.route) {
-        WelcomeScreen2(
-            onNextClick = { navController.navigate(Screen.Welcome3.route) },
-            currentPage = 1,
-            totalPages = 3
-        )
-    }
-
-    composable(Screen.Welcome3.route) {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
-
-        WelcomeScreen3(
-            onGetStartedClick = {
-                scope.launch {
-                    setOnboardingDone(context)
-                    Log.d("onboarding", "onboarding done")
-
-                    // Navigate to OTP onboarding
-                    navController.navigate(Screen.OTPOnboarding.route) {
-                        popUpTo(Screen.Welcome1.route) { inclusive = true }
-                    }
-                }
-            },
-            currentPage = 2,
-            totalPages = 3
-        )
-    }
     composable(Screen.WelcomePager.route) {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()

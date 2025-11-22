@@ -153,6 +153,15 @@ fun PhoneNumberBottomSheet(
                     .padding(bottom = 30.dp)
                     .fillMaxWidth(),
                 onClick = {
+                    if (phone.isBlank()) {
+                        Toast.makeText(context, "Please enter your phone number", Toast.LENGTH_SHORT).show()
+                        return@RadialGradientButton
+                    }
+
+                    if (phone.length < 10) {
+                        Toast.makeText(context, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+                        return@RadialGradientButton
+                    }
                     val fullPhoneNumber = "${selectedCountry.dialCode}$phone"
                     onContinue(fullPhoneNumber)
                 }

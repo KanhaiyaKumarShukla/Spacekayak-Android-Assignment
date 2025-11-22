@@ -1,5 +1,7 @@
 package com.example.spacekayakandroidassignment_kanhaiyakumar.ui.otp
 
+import android.os.Handler
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,9 +34,14 @@ import com.example.spacekayakandroidassignment_kanhaiyakumar.ui.components.sheet
 import com.example.spacekayakandroidassignment_kanhaiyakumar.R
 
 @Composable
-fun OtpVerifiedScreen(){
+fun OtpVerifiedScreen(
+    onBack: () -> Unit
+){
     var size by remember { mutableStateOf<IntSize?>(null) }
 
+    BackHandler {
+        onBack()
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,6 +91,7 @@ fun OtpVerifiedScreen(){
     }
 
 }
+
 @Preview(
     showBackground = true,
     showSystemUi = true,
@@ -97,6 +105,7 @@ fun OtpVerificationScreenPreview() {
         color = Color.White
     ) {
         OtpVerifiedScreen(
+            onBack = {}
         )
     }
 }

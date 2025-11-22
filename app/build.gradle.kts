@@ -67,6 +67,5 @@ dependencies {
     implementation(libs.libphonenumber)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.datastore.preferences)
-
-
+    implementation(libs.lottie.compose)
 }
