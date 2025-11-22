@@ -56,6 +56,7 @@ fun OtpVerificationBottomSheet(
     var isResendEnabled by remember { mutableStateOf(false) }
     var timer by remember { mutableStateOf(60) }
     var isLoading by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(timer) {
         if (timer > 0) {
@@ -200,26 +201,23 @@ fun OtpVerificationBottomSheet(
                     )
                 }
             } else {
-                RadialGradientButton(
-                    text = "Verify my number",
-                    modifier = Modifier
-                        .padding(bottom = 30.dp)
-                        .fillMaxWidth(),
-                    onClick = {
-                        if (otp.length < 6) {
-                            errorMessage = "Please enter a valid 6-digit OTP."
-                            return@RadialGradientButton
-                        }
-                        isLoading = true
-                        val isVerified = onVerify(otp)
-                        if (!isVerified) {
-                            // Server rejected instantly (rare)
-                            errorMessage = "Invalid OTP. Please try again."
-                            isLoading = false
-                        }
+            RadialGradientButton(
+                text = "Verify my number",
+                modifier = Modifier
+                    .padding(bottom = 30.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    if (otp.length < 6) {
+                        errorMessage = "Please enter a valid 6-digit OTP."
+                        return@RadialGradientButton
                     }
-                )
-            }
+
+                    val result = onVerify(otp)
+                    if (!result) {
+                        errorMessage = "Invalid OTP. Please try again."
+                    }
+                }
+            )
         }
     }
 }
